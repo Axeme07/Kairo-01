@@ -19,10 +19,16 @@ def chat():
     if not prompt:
         return jsonify({"error": "Mensaje vacío"}), 400
 
-    respuesta = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[{"role": "user", "content": prompt}]
-    )
+    # Hacer la llamada a la API de OpenAI
+    try:
+        respuesta = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": prompt}]
+        )
+        mensaje = respuesta.choices[0].message["content"]
+        return jsonify({"respuesta": mensaje})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
-    mensaje = respuesta.choices[0].message["content"]
-    return jsonify({"respuesta": mensaje})
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=8080)
