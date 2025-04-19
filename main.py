@@ -5,7 +5,7 @@ import os
 app = Flask(__name__)
 
 # Clave de API desde variable de entorno
-openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = os.getenv("Kairo-01")
 
 @app.route("/", methods=["GET"])
 def home():
